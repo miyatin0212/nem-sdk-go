@@ -3,13 +3,14 @@ package transactions
 import (
 	"errors"
 	"fmt"
+	"math"
+	"strings"
+
 	"github.com/isarq/nem-sdk-go/base"
 	"github.com/isarq/nem-sdk-go/com/requests"
 	"github.com/isarq/nem-sdk-go/extras"
 	"github.com/isarq/nem-sdk-go/model"
 	"github.com/isarq/nem-sdk-go/utils"
-	"math"
-	"strings"
 )
 
 type txPrepare struct {
@@ -77,7 +78,7 @@ func (r *Transfer) Prepare(common Common, network int) base.TxDict {
 
 	msc.recipientCompressedKey = strings.ToUpper(strings.Replace(r.Recipient, "-", "", -1))
 
-	msc.amount = math.Round(r.Amount * 1000000)
+	msc.amount = utils.Round(r.Amount * 1000000)
 
 	msc.message = MsgPrepare(common, r)
 
@@ -129,7 +130,7 @@ func (r *Transfer) PrepareMosaic(common Common, mosaicDefinitionMetaDataPair map
 
 	msc.recipientCompressedKey = strings.ToUpper(strings.Replace(r.Recipient, "-", "", -1))
 
-	msc.amount = math.Round(r.Amount * 1000000)
+	msc.amount = utils.Round(r.Amount * 1000000)
 
 	msc.message = MsgPrepare(common, r)
 
